@@ -1,7 +1,7 @@
 #-------------------------------------------------------------------------
-# AUTHOR: your name
-# FILENAME: title of the source file
-# SPECIFICATION: description of the program
+# AUTHOR: Mason Nash
+# FILENAME: perceptron.py
+# SPECIFICATION: train a single layer, and a multi-layer perceptron and compare their performance using various hyperperameters
 # FOR: CS 4210- Assignment #4
 # TIME SPENT: how long it took you to complete the assignment
 #-----------------------------------------------------------*/
@@ -27,14 +27,15 @@ df = pd.read_csv('optdigits.tes', sep=',', header=None) #reading the data by usi
 X_test = np.array(df.values)[:,:64]    #getting the first 64 fields to form the feature data for test
 y_test = np.array(df.values)[:,-1]     #getting the last field to form the class label for test
 
-for : #iterates over n
+highestAccuracy = 0
+for nInst in n: #iterates over n
 
-    for : #iterates over r
+    for rInst in r: #iterates over r
 
         #iterates over both algorithms
         #-->add your Pyhton code here
 
-        for : #iterates over the algorithms
+        for model in ['P', 'MLP']: #iterates over the algorithms
 
             #Create a Neural Network classifier
             #if Perceptron then
@@ -43,6 +44,12 @@ for : #iterates over n
             #   clf = MLPClassifier() #use those hyperparameters: activation='logistic', learning_rate_init = learning rate, hidden_layer_sizes = number of neurons in the ith hidden layer,
             #                          shuffle = shuffle the training data, max_iter=1000
             #-->add your Pyhton code here
+            
+            if model == 'P' :
+              clf = Perceptron(eta0 = nInst, shuffle = rInst, max_iter=1000)
+            elif model == 'MLP':
+              clf = MLPClassifier(activation='logistic', learning_rate_init = nInst, hidden_layer_sizes = 50, shuffle = rInst, max_iter=1000)
+            
 
             #Fit the Neural Network to the training data
             clf.fit(X_training, y_training)
@@ -52,6 +59,13 @@ for : #iterates over n
             #for (x_testSample, y_testSample) in zip(X_test, y_test):
             #to make a prediction do: clf.predict([x_testSample])
             #--> add your Python code here
+            correctPredictions = 0
+            for (x_testSample, y_testSample) in zip(X_test, y_test):
+                if clf.predict([x_testSample]) == y_testSample :
+                    correctPredictions += 1
+                    
+            currentAccuracy = correctPredictions / len(y_test)
+            
 
             #check if the calculated accuracy is higher than the previously one calculated for each classifier. If so, update the highest accuracy
             #and print it together with the network hyperparameters
@@ -59,6 +73,10 @@ for : #iterates over n
             #Example: "Highest MLP accuracy so far: 0.90, Parameters: learning rate=0.02, shuffle=False"
             #--> add your Python code here
 
+            
+            if currentAccuracy > highestAccuracy :
+                highestAccuracy = currentAccuracy
+                print(f'Highest {model} accuracy so far: {highestAccuracy}, Parameters: learning rate={nInst}, shuffle={rInst}')
 
 
 
