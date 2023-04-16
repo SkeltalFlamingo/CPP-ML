@@ -72,7 +72,7 @@ for nInst in n: #iterates over n
             #Example: "Highest Perceptron accuracy so far: 0.88, Parameters: learning rate=0.01, shuffle=True"
             #Example: "Highest MLP accuracy so far: 0.90, Parameters: learning rate=0.02, shuffle=False"
             #--> add your Python code here
-
+            
             
             if currentAccuracy > highestAccuracy :
                 highestAccuracy = currentAccuracy
