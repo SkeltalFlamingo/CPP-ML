@@ -1,7 +1,7 @@
 #-------------------------------------------------------------------------
-# AUTHOR: your name
-# FILENAME: title of the source file
-# SPECIFICATION: description of the program
+# AUTHOR: Mason Nash
+# FILENAME: bagging_random_forest.py
+# SPECIFICATION: optimize performance of a random_forest model
 # FOR: CS 4210- Assignment #4
 # TIME SPENT: how long it took you to complete the assignment
 #-----------------------------------------------------------*/
@@ -12,6 +12,7 @@
 from sklearn import tree
 from sklearn.utils import resample
 from sklearn.ensemble import RandomForestClassifier
+import csv
 
 dbTraining = []
 dbTest = []
@@ -19,14 +20,31 @@ X_training = []
 y_training = []
 classVotes = [] #this array will be used to count the votes of each classifier
 
+# code to read a contact_lens csv into a 2d list
+def readCSVToList(dsIN):
+    dbOut = []
+    with open(dsIN, 'r') as csvfile:
+       reader = csv.reader(csvfile)
+       for i, row in enumerate(reader):
+           if i > 0:  # skipping the header
+               #debug
+               dbOut.append(row)
+    
+    #print (dbOut)
+    return dbOut
+
+
 #reading the training data from a csv file and populate dbTraining
 #--> add your Python code here
+dbTraining = readCSVToList('optdigits.tra')
 
 #reading the test data from a csv file and populate dbTest
 #--> add your Python code here
+dbTest = readCSVToList('optdigits.tes')
 
 #inititalizing the class votes for each test sample. Example: classVotes.append([0,0,0,0,0,0,0,0,0,0])
 #--> add your Python code here
+classVotes.append([0,0,0,0,0,0,0,0,0,0])
 
 print("Started my base and ensemble classifier ...")
 
@@ -36,7 +54,10 @@ for k in range(20): #we will create 20 bootstrap samples here (k = 20). One clas
 
   #populate the values of X_training and y_training by using the bootstrapSample
   #--> add your Python code here
-
+  for sample in bootstrapSample :
+     X_training.append(sample[0:len(sample)-1])
+     y_training.append(sample[len(sample)-1])
+   
   #fitting the decision tree to the data
   clf = tree.DecisionTreeClassifier(criterion = 'entropy', max_depth=None) #we will use a single decision tree without pruning it
   clf = clf.fit(X_training, y_training)
@@ -77,6 +98,7 @@ clf.fit(X_training,y_training)
 
 #make the Random Forest prediction for each test sample. Example: class_predicted_rf = clf.predict([[3, 1, 2, 1, ...]]
 #--> add your Python code here
+
 
 #compare the Random Forest prediction for each test sample with the ground truth label to calculate its accuracy
 #--> add your Python code here

@@ -3,7 +3,7 @@
 # FILENAME: perceptron.py
 # SPECIFICATION: train a single layer, and a multi-layer perceptron and compare their performance using various hyperperameters
 # FOR: CS 4210- Assignment #4
-# TIME SPENT: how long it took you to complete the assignment
+# TIME SPENT: 30 mins on this file
 #-----------------------------------------------------------*/
 
 #IMPORTANT NOTE: YOU HAVE TO WORK WITH THE PYTHON LIBRARIES numpy AND pandas to complete this code.
